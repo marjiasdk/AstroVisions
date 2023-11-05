@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to NASA's STS-7 Mission Visualization</title>
+  <link rel="stylesheet" href="CSS/style.css">
+  <link href='https://fonts.googleapis.com/css?family=Space Mono' rel='stylesheet'>
+  <style>
+    body 
+    {
+      font-family: 'Space Mono';font-size: 22px;
+    }
+
+    p
+    {
+      font-family: 'Space Mono';font-size: 22px;
+    }
+    
+    .button-56
+    {
+      font-family: 'Space Mono';font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="stars4"></div>
+    </div>
+  <div class="welcome-container">
+    <img src="Images/nasa_international-removebg-preview.png" width=230px; height=230px; alt="Logo" class="logo">
+    <h1>Welcome To The Visualisation of NASA's STS-7 Mission</h1>
+    <p>Step into the world of space exploration.</p>
+    <button class="button-56" onclick="startVR()">Start VR Experience</button>
+  </div>
+
+  <script>
+    function startVR() {
+      // Redirect the user to the VR application
+      window.location.href = "vr.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-star-system-component@1.0.0/index.js"></script>
+</head>
+<body>
+  <a-scene>
+    <!-- Assets are used for various aspects of the VR application -->
+    <a-assets>
+      <img
+        id="earth"
+        src="https://cdn.glitch.global/b7c659cd-a5b7-437e-8bb0-1348d56dbb93/earth.jpg?v=1696755027803"
+      />
+    </a-assets>
+
+    <a-sky color="black"></a-sky>
+    <a-entity star-system="count: 1000; radius: 250; depth: 0"></a-entity>
+
+    <!-- Earth -->
+    <a-sphere
+      id="earthSphere"
+      src="#earth"
+      position="0 2 -15"
+      radius="4"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+    >
+    </a-sphere>
+
+    <!-- Earth Popup -->
+    <a-plane
+      id="earthPopup"
+      width="3"
+      height="1.5"
+      position="0 1.2 -8"
+      visible="false"
+      material="shader: flat; src: #popupFragmentShader; transparent: true; opacity: 0;"
+      geometry="primitive: plane"
+    >
+      <!-- Front-facing text -->
+      <a-text
+        value="The primary objective of STS-7 was to deploy two communication satellites into orbit:\n\nAnik C2 for Telesat Canada.\nPalapa B1 for Indonesia.\n\nThis enabled for global connections."
+        color="white"
+        align="center"
+        position="-10.5 5.3 0.01"
+        scale="1.5 1.5 1.5"
+      ></a-text>
+
+      <!-- Back-facing text -->
+      <a-text
+        value="The Earth"
+        color="white"
+        align="center"
+        position="0 3 -0.01"
+        rotation="0 180 0"
+      ></a-text>
+    </a-plane>
+    
+    <!-- Shuttle -->
+    <a-gltf-model
+      id="shuttle"
+      src="SpaceShuttle/SpaceShuttle.gltf"
+      scale="0.5 0.5 0.5"
+      rotation="-90 0 180"
+      position="0 5.3 -15"
+      animation__scale-up="property: scale; to: 0.5 0.5 0.5; dur: 35000; easing: linear" 
+      animation__move-up="property: position; to: 0 10 -15; dur: 70000; easing: linear" 
+    >
+    </a-gltf-model>
+
+    <!-- Shuttle Popup -->
+    <a-plane
+      id="shuttlePopup"
+      width="3"
+      height="1.5"
+      position="0 5 -15"
+      scale="1.7 1.7 1.7"
+      visible="false"
+      material="shader: flat; src: #popupFragmentShader; transparent: true; opacity: 0;"
+      geometry="primitive: plane"
+      animation__move-popup="property: position; to: 0 7 -15; dur: 70000; easing: linear"
+    >
+      <!-- Front-facing text -->
+      <a-text
+        value=" The mission was carried out by the Space Shuttle Challenger (OV-099), which was making its second flight."
+        color="white"
+        align="center"
+        position="0 2 0.01"
+      ></a-text>
+
+  <!-- Back-facing text -->
+      <a-text
+        value="The Space Shuttle"
+        color="white"
+        align="center"
+        position="0 3 -0.01"
+        rotation="0 180 0"
+      ></a-text>
+    </a-plane>
+
+
+    <!-- Parent Entity for Satellites -->
+    <a-entity position="0 0 -15" rotation="0 0 0" id="satellitesParent">
+      <!-- Satellite 1 -->
+      <a-entity
+        class="satellite"
+        position="5 0 0"
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 20000"
+      >
+        <a-gltf-model
+          src="AnikC/AnikC.gltf"
+          scale="0.55 0.55 0.55"
+        >
+        </a-gltf-model>
+        <!-- Popup for Satellite 1 -->
+        <a-plane
+          class="popup-ui"
+          width="1.5"
+          height="1"
+          position="0 2.5 0"
+          visible="false"
+          material="shader: flat; src: #popupFragmentShader; transparent: true; opacity : 0;"
+          geometry="primitive: plane"
+        >
+          <a-text
+            value="The Anik C1 Satellite"
+            color="white"
+            align="center"
+            position="0 0 0.01"
+          ></a-text>
+          <a-text
+            value="The Anik C1 Satellite"
+            color="white"
+            align="center"
+            position="0 0 -0.01"
+            rotation="0 180 0"
+          ></a-text>
+        </a-plane>
+      </a-entity>
+
+      <!-- Satellite 2 -->
+      <a-entity
+        class="satellite"
+        position="-5 0 0"
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 20000"
+      >
+        <a-gltf-model
+          src="PalapaB/PalapaB.gltf"
+          scale="0.55 0.55 0.55"
+        >
+        </a-gltf-model>
+        <!-- Popup for Satellite 2 -->
+        <a-plane
+          class="popup-ui"
+          width="2"
+          height="1"
+          position="0 1.5 0"
+          visible="false"
+          material="shader: flat; src: #popupFragmentShader; transparent: true; opacity: 0;"
+          geometry="primitive: plane"
+        >
+          <a-text
+            value="The Palapa B1 Satellite"
+            color="white"
+            align="center"
+            position="0 0 0.01"
+          ></a-text>
+          <a-text
+            value="The Palapa B1 Satellite"
+            color="white"
+            align="center"
+            position="0 0 -0.01"
+            rotation="0 180 0"
+          ></a-text>
+        </a-plane>
+      </a-entity>
+    </a-entity>
+
+    <!-- Add Asteroids (Little Spheres) -->
+    <a-entity id="asteroids">
+      <!-- Example Asteroid 1 -->
+      <a-sphere
+        class="asteroid"
+        radius="0.1"
+        color="gray"
+        position="2 2 -10" 
+      ></a-sphere>
+
+      <!-- Example Asteroid 2 -->
+      <a-sphere
+        class="asteroid"
+        radius="0.1"
+        color="gray"
+        position="-2 -2 10"
+      ></a-sphere>
+
+      <!-- Add more asteroids as needed -->
+      <!-- Example Asteroid 3 -->
+      <a-sphere
+        class="asteroid"
+        radius="0.1"
+        color="gray"
+        position="1 -1 -8" 
+      ></a-sphere>
+
+      <!-- Example Asteroid 4 -->
+      <a-sphere
+        class="asteroid"
+        radius="0.1"
+        color="gray"
+        position="-1 1 8"
+      ></a-sphere>
+    </a-entity>
+
+    <a-light type="point" intensity="1" position="1 1 1"></a-light>
+
+    <a-camera wasd-controls="fly: true; acceleration: 100" look-controls>
+      <a-cursor></a-cursor>
+    </a-camera>
+    
+  </a-scene>
+
+  
+  <script>
+    // Get references to the shuttle popup and the shuttle
+    const shuttlePopup = document.querySelector('#shuttlePopup');
+    const shuttle = document.querySelector('#shuttle');
+
+    // Add event listener to show/hide shuttle popup
+    shuttle.addEventListener('mouseenter', () => {
+      shuttlePopup.setAttribute('visible', 'true');
+    });
+
+    shuttle.addEventListener('mouseleave', () => {
+      shuttlePopup.setAttribute('visible', 'false');
+    });
+
+    // Get references to the satellites and the popup UIs
+    const satellites = document.querySelectorAll('.satellite');
+    const popupUIs = document.querySelectorAll('.popup-ui');
+
+    // Add event listeners to show/hide popup UIs on hover
+    satellites.forEach((satellite, index) => {
+      satellite.addEventListener('mouseenter', () => {
+        popupUIs[index].setAttribute('visible', 'true');
+      });
+
+      satellite.addEventListener('mouseleave', () => {
+        popupUIs[index].setAttribute('visible', 'false');
+      });
+    });
+
+    // Get references to the Earth and its popup
+    const earth = document.querySelector('#earthPopup');
+    const earthPopup = document.querySelector('#earthPopup');
+
+    // Add event listeners to show/hide Earth's popup
+    earth.addEventListener('mouseenter', () => {
+      earthPopup.setAttribute('visible', 'true');
+    });
+
+    earth.addEventListener('mouseleave', () => {
+      earthPopup.setAttribute('visible', 'false');
+    });
+
+    // Get references to the satellites and the parent entity
+    const satellite1 = document.querySelector('#satellitesParent a-entity:nth-child(1)');
+    const satellite2 = document.querySelector('#satellitesParent a-entity:nth-child(2)');
+    const parentEntity = document.querySelector('#satellitesParent');
+
+    // Initialize variables
+    let angle = 0; // Initial angle
+    const orbitRadius = 5; // Radius of the orbit
+
+    // Function to update satellite positions
+    function updateSatellitePositions() {
+      // Calculate the new positions based on the angle
+      const x = Math.cos(angle) * orbitRadius;
+      const z = Math.sin(angle) * orbitRadius;
+
+      // Update the position of the satellites within the parent entity
+      satellite1.setAttribute('position', `${x} 0 ${z}`);
+      satellite2.setAttribute('position', `${-x} 0 ${-z}`);
+
+      // Increment the angle for the next frame
+      angle += 0.005; // Adjust the speed of the orbit as needed
+
+      // Request the next frame update
+      requestAnimationFrame(updateSatellitePositions);
+    }
+
+    // Start updating satellite positions
+    updateSatellitePositions();
+  </script>
+</body>
+</html>
